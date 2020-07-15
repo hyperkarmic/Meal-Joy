@@ -1,19 +1,12 @@
-<nav class="flex items-center justify-between flex-wrap bg-gray-800 p-6">
-  <div class="flex items-center flex-shrink-0 text-white mr-6">
-    <span class="font-semibold text-xl tracking-tight">Meal Joy</span>
-  </div>
-  <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-    <div class="text-sm lg:flex-grow">
-      <a href="/dashboard" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-orange-500 mr-4">
-        Dashboard
-      </a>
-      <a href="/my-movies" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-orange-500 mr-4">
-        My Movies
-      </a>
-    </div>
+<div class="container-fluid mx-auto bg-gray-800 p-5">
+  <nav class="flex justify-between">
     <div>
-      <a href="/logout"
-        class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-orange-500 hover:bg-white mt-4 lg:mt-0">Logout</a>
+      <a class="text-white" href="/">Meal Joy</a>
     </div>
-  </div>
-</nav>
+    <ul class="flex flex-row">
+      <li class="pr-5"><a class="text-white" href="/dashboard">Dashboard</a></li>
+      <li class="pr-5"><a class="text-white" href="/saved">Saved Recipes</a></li>
+      <li class="pr-5"><a class="text-white" href="/login">Login</a></li>
+    </ul>
+  </nav>
+</div>
