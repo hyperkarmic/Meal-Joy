@@ -1,4 +1,5 @@
 const express = require("express");
+const axios = require("axios");
 
 const isAuthenticated = require("../middleware/isAuthenticated");
 
@@ -32,6 +33,29 @@ router.get("/logout", (req, res) => {
 
 router.get("/dashboard", isAuthenticated, (req, res) => {
   res.render("dashboard", { email: req.user.email });
+});
+
+//work this session
+router.post("/recipes", async (req, res) => {
+  const { searchKeyword } = req.body;
+  const API_ID = "83098caf";
+  const API_KEY = "7c8da7de3bd3496782094a8758275189";
+
+  const response = await axios.get(
+    `https://api.edamam.com/search?q=${searchKeyword}&app_id=${API_ID}&app_key=${API_KEY}&from=0&to=9`
+  );
+  //make axios get - request to 3rd party api
+  //use async await
+  const hits = response.data.hits;
+  const recipes = hits.map((hit) => {
+    const label = hit.recipe.label;
+    const imageUrl = hit.recipe.image;
+    const source = hit.recipe.source;
+    const ingredients = hit.recipe.ingredientLines;
+    const calories = hit.recipe.calories;
+    return { label, imageUrl, source, ingredients, calories };
+  });
+  res.render("dashboard", { recipes });
 });
 
 module.exports = router;
