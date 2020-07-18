@@ -3,13 +3,6 @@ const Sequelize = require("sequelize");
 const sequelize = require("../config/connection.js");
 
 const schema = {
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      len: [1, 140],
-    },
-  },
   label: {
     type: Sequelize.STRING,
     allowNull: false,

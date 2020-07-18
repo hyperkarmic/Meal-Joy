@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === "production") {
     productionOptions
   );
 } else {
-  sequelize = new Sequelize("recipedb", "root", "password", localOptions);
+  sequelize = new Sequelize("recipedb", "root", "mibapab23", localOptions);
 }
 
 module.exports = sequelize;

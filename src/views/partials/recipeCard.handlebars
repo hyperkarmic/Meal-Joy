@@ -1,19 +1,31 @@
-<div class="lg:max-w-full lg:flex p-2">
-    <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-        style="background-image: url('{{imageUrl}}')" title={{label}}>
-    </div>
-    <div
-        class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-        <div class="mb-8">
-            <p class="text-sm text-gray-600 flex items-center">
-                Calories: {{calories}}
-            </p>
-            <div class="text-gray-900 font-bold text-xl mb-2">{{label}}</div>
+<form action="/save/recipe" method="POST">
+    <div class="lg:max-w-full lg:flex p-2">
+        <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+            style="background-image: url('{{imageUrl}}')" title={{label}}>
         </div>
-        <div class="flex items-center">
-            <div class="text-sm">
-                <p class="text-gray-900 leading-none">{{source}}</p>
+        <div
+            class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+            <div class="mb-8">
+                <p class="text-sm text-gray-600 flex items-center">
+                    Calories: {{calories}}
+                </p>
+                <div class="text-gray-900 font-bold text-xl mb-2">
+                    {{label}}
+                </div>
+            </div>
+            <div class="mb-4">
+                <div class="text-sm">
+                    <p class="text-gray-900 leading-none">{{source}}</p>
+
+                </div>
+                <div><button type="submit">Save <i class="fa fa-heart" aria-hidden="true"></i></button>
+                </div>
             </div>
         </div>
+        <input type="hidden" id="label" name="label" value={{label}}>
+        <input type="hidden" id="calories" name="calories" value={{calories}}>
+        <input type="hidden" id="imageUrl" name="imageUrl" value={{imageUrl}}>
+        <input type="hidden" id="source" name="source" value={{source}}>
+        <input type="hidden" id="ingredients" name="ingredients" value="testing">
     </div>
-</div>
+</form>
