@@ -35,7 +35,6 @@ router.get("/dashboard", isAuthenticated, (req, res) => {
   res.render("dashboard", { email: req.user.email });
 });
 
-//work this session
 router.post("/recipes", async (req, res) => {
   const { searchKeyword } = req.body;
   const API_ID = "83098caf";
@@ -55,6 +54,7 @@ router.post("/recipes", async (req, res) => {
     const calories = hit.recipe.calories;
     return { label, imageUrl, source, ingredients, calories };
   });
+
   res.render("dashboard", { recipes });
 });
 
