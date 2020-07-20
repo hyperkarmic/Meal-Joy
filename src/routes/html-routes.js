@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 
 const Recipe = require("../models/recipe");
+const RecentSearchResult = require("../models/recentSearchResult");
 const isAuthenticated = require("../middleware/isAuthenticated");
 
 const router = express.Router();
@@ -55,6 +56,13 @@ router.post("/dashboard", async (req, res) => {
     const calories = hit.recipe.calories;
     return { label, imageUrl, source, ingredients, calories };
   });
+  const recentSearch = {
+    userId: req.user.id,
+    searchResults: recipes,
+    searchTerm: searchKeyword,
+  };
+
+  await RecentSearchResult.create(recentSearch);
 
   res.render("dashboard", { recipes });
 });
