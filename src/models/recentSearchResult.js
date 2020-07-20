@@ -5,9 +5,8 @@ const sequelize = require("../config/connection.js");
 const schema = {
   userId: {
     type: Sequelize.INTEGER,
-    // references: "users",
-    // referencesKey: "id",
     field: "user_id",
+    unique: true,
   },
   searchTerm: {
     type: Sequelize.STRING,
@@ -16,10 +15,10 @@ const schema = {
   },
   searchResults: {
     type: Sequelize.TEXT,
-    get: function () {
-      return JSON.parse(this.getDataValue("searchResults"));
+    get() {
+      return JSON.parse(this.getDataValue(searchResults));
     },
-    set: function (value) {
+    set(value) {
       this.setDataValue("searchResults", JSON.stringify(value));
     },
   },

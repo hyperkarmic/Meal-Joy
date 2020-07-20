@@ -33,8 +33,21 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-router.get("/dashboard", isAuthenticated, (req, res) => {
-  res.render("dashboard", { email: req.user.email });
+router.get("/dashboard", isAuthenticated, async (req, res) => {
+  const recentSearches = await RecentSearchResult.findOne({
+    where: { userId: req.user.id },
+    raw: true,
+  });
+
+  const data = {
+    searchResults:
+      recentSearches !== null
+        ? JSON.parse(recentSearches.searchResults)
+        : undefined,
+    searchTerm: recentSearches !== null ? recentSearches.searchTerm : undefined,
+  };
+
+  res.render("dashboard", data);
 });
 
 router.post("/dashboard", async (req, res) => {
@@ -56,13 +69,14 @@ router.post("/dashboard", async (req, res) => {
     const calories = hit.recipe.calories;
     return { label, imageUrl, source, ingredients, calories };
   });
+
   const recentSearch = {
     userId: req.user.id,
     searchResults: recipes,
     searchTerm: searchKeyword,
   };
 
-  await RecentSearchResult.create(recentSearch);
+  await RecentSearchResult.upsert(recentSearch);
 
   res.render("dashboard", { recipes });
 });
