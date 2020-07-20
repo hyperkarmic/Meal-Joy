@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 
+const Recipe = require("../models/recipe");
 const isAuthenticated = require("../middleware/isAuthenticated");
 
 const router = express.Router();
@@ -35,8 +36,7 @@ router.get("/dashboard", isAuthenticated, (req, res) => {
   res.render("dashboard", { email: req.user.email });
 });
 
-//work this session
-router.post("/recipes", async (req, res) => {
+router.post("/dashboard", async (req, res) => {
   const { searchKeyword } = req.body;
   const API_ID = "83098caf";
   const API_KEY = "7c8da7de3bd3496782094a8758275189";
@@ -55,7 +55,27 @@ router.post("/recipes", async (req, res) => {
     const calories = hit.recipe.calories;
     return { label, imageUrl, source, ingredients, calories };
   });
+
   res.render("dashboard", { recipes });
+});
+
+router.post("/save/recipe", async (req, res) => {
+  try {
+    console.log(req.body);
+    const { label, imageUrl, ingredients, source, calories } = req.body;
+    const payload = {
+      label,
+      imageUrl,
+      source,
+      ingredients,
+      calories,
+    };
+    await Recipe.create(payload);
+    res.redirect("/dashboard");
+  } catch (err) {
+    console.log(err);
+    res.status(401).json(err);
+  }
 });
 
 module.exports = router;

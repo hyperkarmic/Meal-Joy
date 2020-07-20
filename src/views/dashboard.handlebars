@@ -1,10 +1,15 @@
 {{> privateNav}}
+<div class="flex justify-center py-4">
+  <h1 class="pacifico justify-center text-green-800">
+    What would you like to eat?
+  </h1>
+</div>
 <div class="flex justify-center my-4">
-  <form class="w-full max-w-sm" action="/recipes" method="POST">
+  <form class="w-full max-w-sm" action="/dashboard" method="POST">
     <div class="flex items-center border-b border-b-2 border-green-800 py-2">
       <input
         class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-        name="searchKeyword" type="text" placeholder="Jane Doe" aria-label="Full name">
+        name="searchKeyword" type="text" placeholder="Chicken" aria-label="Full name">
       <button
         class="flex-shrink-0 bg-red-600 hover:bg-red-500 border-red-600 hover:border-red-500 text-sm border-4 text-white py-1 px-2 rounded"
         type="submit">
@@ -14,11 +19,22 @@
   </form>
 </div>
 <div>
+  {{#if recipes}}
+  <div class="flex justify-center">
+    <h2 class="pacifico text-red-600">Search Results</h1>
+  </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 p-2">
-    {{#if recipes}}
     {{#each recipes}}
     {{> recipeCard}}
     {{/each}}
     {{/if}}
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+    <div class="flex justify-center">
+      <h2 class="pacifico text-red-600">Saved Recipes</h1>
+    </div>
+    <div class="flex justify-center">
+      <h1 class="pacifico text-red-600">Favorite Recipes</h1>
+    </div>
   </div>
 </div>
