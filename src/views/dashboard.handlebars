@@ -16,35 +16,14 @@
         Search
       </button>
     </div>
-    <div class="flex items-center mr-4 mb-4 py-3">
-      <input id="radio1" type="radio" name="radio" class="hidden" />
-      <label for="radio1" class="flex items-center cursor-pointer px-2">
-        <span class="w-4 h-4 inline-block mr-1 border border-grey"></span>
-        Vegetarian</label>
-      <input id="radio2" type="radio" name="radio" class="hidden" />
-      <label for="radio2" class="flex items-center cursor-pointer px-2">
-        <span class="w-4 h-4 inline-block mr-1 border border-grey"></span>
-        Vegan</label>
-      <input id="radio3" type="radio" name="radio" class="hidden" />
-      <label for="radio3" class="flex items-center cursor-pointer px-2">
-        <span class="w-4 h-4 inline-block mr-1 border border-grey"></span>
-        Alcohol-Free</label>
-      <input id="radio4" type="radio" name="radio" class="hidden" />
-      <label for="radio4" class="flex items-center cursor-pointer px-2">
-        <span class="w-4 h-4 inline-block mr-1 border border-grey"></span>
-        Immuno-Supportive</label>
-      <label for="radio4" class="flex items-center cursor-pointer px-2">
-        <span class="w-4 h-4 inline-block mr-1 border border-grey"></span>
-        Peanut-free</label>
-      <label for="radio4" class="flex items-center cursor-pointer px-2">
-        <span class="w-4 h-4 inline-block mr-1 border border-grey"></span>
-        Sugar-Conscious</label>
-    </div>
   </form>
 </div>
 <div>
+  {{#if recipes}}
+  <div class="flex justify-center">
+    <h2 class="pacifico text-red-600">Search Results</h1>
+  </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 p-2">
-    {{#if recipes}}
     {{#each recipes}}
     {{> recipeCard}}
     {{/each}}

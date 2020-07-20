@@ -71,7 +71,7 @@ router.post("/save/recipe", async (req, res) => {
       calories,
     };
     await Recipe.create(payload);
-    res.redirect(200, "/dashboard");
+    res.redirect("/dashboard");
   } catch (err) {
     console.log(err);
     res.status(401).json(err);
