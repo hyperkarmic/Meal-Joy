@@ -21,9 +21,9 @@
 </div>
 {{#if searchResults}}
 <div class="flex justify-center">
-  <h3 class="pacifico text-green-800">Search Results:</h3>
+  <h3 class="pacifico text-red-600">Search Results:</h3>
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 p-2">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 p-2">
   {{#each searchResults}}
   {{> recipeCard}}
   {{/each}}
@@ -32,7 +32,7 @@
 <div>
   {{#if recipes}}
   <div class="flex justify-center">
-    <h3 class="pacifico text-green-800">Search Results:</h3>
+    <h1 class="pacifico text-green-800">Search Results:</h1>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 p-2">
     {{#each recipes}}
