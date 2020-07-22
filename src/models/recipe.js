@@ -3,6 +3,14 @@ const Sequelize = require("sequelize");
 const sequelize = require("../config/connection.js");
 
 const schema = {
+  userId: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  recipeId: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   label: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -25,8 +33,12 @@ const schema = {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  calories: {
-    type: Sequelize.DOUBLE(10, 2),
+  caloriesPerPerson: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  serves: {
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
 };

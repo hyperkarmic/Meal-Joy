@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 
 const Recipe = require("../models/recipe");
+const RecentSearchResult = require("../models/recentSearchResult");
 const isAuthenticated = require("../middleware/isAuthenticated");
 
 const router = express.Router();
@@ -32,8 +33,21 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-router.get("/dashboard", isAuthenticated, (req, res) => {
-  res.render("dashboard", { email: req.user.email });
+router.get("/dashboard", isAuthenticated, async (req, res) => {
+  const recentSearches = await RecentSearchResult.findOne({
+    where: { userId: req.user.id },
+    raw: true,
+  });
+
+  const data = {
+    searchResults:
+      recentSearches !== null
+        ? JSON.parse(recentSearches.searchResults)
+        : undefined,
+    searchTerm: recentSearches !== null ? recentSearches.searchTerm : undefined,
+  };
+
+  res.render("dashboard", data);
 });
 
 router.post("/dashboard", async (req, res) => {
@@ -48,13 +62,38 @@ router.post("/dashboard", async (req, res) => {
   //use async await
   const hits = response.data.hits;
   const recipes = hits.map((hit) => {
+    const recipeUrl = hit.recipe.uri;
+    const recipeUrlLength = recipeUrl.length;
+    const recipeUrlIndex = recipeUrlLength - 51;
+    const recipeId = recipeUrl.slice(-recipeUrlIndex);
     const label = hit.recipe.label;
     const imageUrl = hit.recipe.image;
     const source = hit.recipe.source;
     const ingredients = hit.recipe.ingredientLines;
+    const serves = hit.recipe.yield;
     const calories = hit.recipe.calories;
-    return { label, imageUrl, source, ingredients, calories };
+    const caloriesPerPerson = Math.floor(calories / serves);
+    const userId = req.user.id;
+
+    return {
+      userId,
+      recipeId,
+      label,
+      imageUrl,
+      caloriesPerPerson,
+      serves,
+      source,
+      ingredients,
+    };
   });
+
+  const recentSearch = {
+    userId: req.user.id,
+    searchResults: recipes,
+    searchTerm: searchKeyword,
+  };
+
+  await RecentSearchResult.upsert(recentSearch);
 
   res.render("dashboard", { recipes });
 });
@@ -62,13 +101,25 @@ router.post("/dashboard", async (req, res) => {
 router.post("/save/recipe", async (req, res) => {
   try {
     console.log(req.body);
-    const { label, imageUrl, ingredients, source, calories } = req.body;
-    const payload = {
+    const {
+      userId,
+      recipeId,
       label,
       imageUrl,
+      caloriesPerPerson,
+      serves,
+      ingredients,
+      source,
+    } = req.body;
+    const payload = {
+      userId,
+      recipeId,
+      label,
+      imageUrl,
+      caloriesPerPerson,
+      serves,
       source,
       ingredients,
-      calories,
     };
     await Recipe.create(payload);
     res.redirect("/dashboard");

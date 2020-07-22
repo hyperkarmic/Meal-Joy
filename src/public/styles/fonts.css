@@ -1,4 +1,26 @@
 .pacifico {
   font-family: "Pacifico", cursive;
-  font-size: 30px;
+}
+
+.mealjoy-green {
+  color: rgb(63, 121, 29);
+}
+
+.border-mealjoy-green {
+  border-color: rgb(63, 121, 29);
+}
+
+.mealjoy-light-green {
+  color: rgb(190, 207, 60);
+}
+
+.border-mealjoy-light-green {
+  border-color: rgb(190, 207, 60);
+}
+.bg-mealjoy-red {
+  background-color: rgb(232, 3, 2);
+}
+
+.mealjoy-red {
+  color: rgb(232, 3, 2);
 }
