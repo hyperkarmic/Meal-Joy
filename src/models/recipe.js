@@ -33,8 +33,12 @@ const schema = {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  calories: {
-    type: Sequelize.DOUBLE(10, 2),
+  caloriesPerPerson: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  serves: {
+    type: Sequelize.INTEGER,
     allowNull: false,
   },
 };

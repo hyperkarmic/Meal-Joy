@@ -70,9 +70,21 @@ router.post("/dashboard", async (req, res) => {
     const imageUrl = hit.recipe.image;
     const source = hit.recipe.source;
     const ingredients = hit.recipe.ingredientLines;
+    const serves = hit.recipe.yield;
     const calories = hit.recipe.calories;
+    const caloriesPerPerson = Math.floor(calories / serves);
     const userId = req.user.id;
-    return { userId, recipeId, label, imageUrl, source, ingredients, calories };
+
+    return {
+      userId,
+      recipeId,
+      label,
+      imageUrl,
+      caloriesPerPerson,
+      serves,
+      source,
+      ingredients,
+    };
   });
 
   const recentSearch = {
@@ -94,18 +106,20 @@ router.post("/save/recipe", async (req, res) => {
       recipeId,
       label,
       imageUrl,
+      caloriesPerPerson,
+      serves,
       ingredients,
       source,
-      calories,
     } = req.body;
     const payload = {
       userId,
       recipeId,
       label,
       imageUrl,
+      caloriesPerPerson,
+      serves,
       source,
       ingredients,
-      calories,
     };
     await Recipe.create(payload);
     res.redirect("/dashboard");
