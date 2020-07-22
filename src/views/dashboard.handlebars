@@ -21,34 +21,24 @@
     </div>
   </div>
 </div>
-{{#if searchResults}}
+{{#if recipes}}
 <div class="flex justify-center">
-  <h1 class="pacifico text-lg md:text-2xl lg:text-4xl mealjoy-red">Search Results:
-  </h1>
+  <h1 class="pacifico text-lg md:text-2xl lg:text-4xl mealjoy-red">Search Results:</h1>
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 p-2">
-  {{#each searchResults}}
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 p-2">
+  {{#each recipes}}
   {{> recipeCard}}
   {{/each}}
 </div>
 {{/if}}
-<div>
-  {{#if recipes}}
-  <div class="flex justify-center">
-    <h1 class="pacifico text-lg md:text-2xl lg:text-4xl mealjoy-red">Search Results:</h1>
-  </div>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 p-2">
-    {{#each recipes}}
-    {{> recipeCard}}
-    {{/each}}
-  </div>
-  {{/if}}
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-    <div class="flex justify-center">
-      <h1 class="pacifico mealjoy-red">Saved Recipes</h1>
-    </div>
-    <div class="flex justify-center">
-      <h1 class="pacifico mealjoy-red">Favorite Recipes</h1>
-    </div>
-  </div>
+
+{{#if savedRecipes}}
+<div class="flex justify-center">
+  <h1 class="pacifico mealjoy-red">Saved Recipes</h1>
 </div>
+<div class="grid grid-cols-1">
+  {{#each savedRecipes}}
+  {{> recipeCard}}
+  {{/each}}
+</div>
+{{/if}}
