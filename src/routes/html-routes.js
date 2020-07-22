@@ -71,7 +71,8 @@ router.post("/dashboard", async (req, res) => {
     const source = hit.recipe.source;
     const ingredients = hit.recipe.ingredientLines;
     const calories = hit.recipe.calories;
-    return { recipeId, label, imageUrl, source, ingredients, calories };
+    const userId = req.user.id;
+    return { userId, recipeId, label, imageUrl, source, ingredients, calories };
   });
 
   const recentSearch = {
@@ -89,6 +90,7 @@ router.post("/save/recipe", async (req, res) => {
   try {
     console.log(req.body);
     const {
+      userId,
       recipeId,
       label,
       imageUrl,
@@ -97,6 +99,7 @@ router.post("/save/recipe", async (req, res) => {
       calories,
     } = req.body;
     const payload = {
+      userId,
       recipeId,
       label,
       imageUrl,
