@@ -1,30 +1,32 @@
-<form action="/save/recipe" method="POST">
-    <div class="flex justify-center border p-4">
+<form class="flex justify-center" action="/save/recipe" method="POST">
+    <div class="flex justify-between border w-4/5 md:w-auto lg:w-auto m-1 md:m-3 lg:m-4  p-3">
         <div class="flex content-center flex-wrap bg-gray-200 h-48">
             <div>
                 <img src={{imageUrl}}>
             </div>
         </div>
         <div class="w-3/4 h-100% p-4 flex flex-col justify-between leading-normal">
-            <div class="mb-8">
-                <p class="text-sm text-gray-600 flex items-center">
+            <div>
+                <p class="text-xs text-gray-600 flex items-center">
                     Calories: {{calories}}
                 </p>
-                <div class="text-gray-900 font-bold text-xl mb-2">
+                <div class="text-gray-900 font-bold text-lg md:text-xl lg:text-xl mb-2">
                     {{label}}
                 </div>
             </div>
             <div class="flex justify-between items-center mb-4">
-                <div class="text-sm">
+                <div class="text-xs">
                     <p class="text-gray-900 leading-none">{{source}}</p>
                 </div>
-                <div>
+                <div class="save">
                     <button type="submit"
-                        class="bg-red-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded-full">
+                        class="bg-mealjoy-red hover:bg-green-300 text-white text-sm font-bold py-2 px-4 rounded-full">
                         <i class="fa fa-heart" aria-hidden="true"></i>
-                    </button> </div>
+                    </button>
+                </div>
             </div>
         </div>
+        <input type="hidden" id="recipeId" name="recipeId" value={{recipeId}}>
         <input type="hidden" id="label" name="label" value={{label}}>
         <input type="hidden" id="calories" name="calories" value={{calories}}>
         <input type="hidden" id="imageUrl" name="imageUrl" value={{imageUrl}}>

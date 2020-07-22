@@ -3,6 +3,10 @@ const Sequelize = require("sequelize");
 const sequelize = require("../config/connection.js");
 
 const schema = {
+  recipeId: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   label: {
     type: Sequelize.STRING,
     allowNull: false,

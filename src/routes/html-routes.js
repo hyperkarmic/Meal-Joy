@@ -62,12 +62,16 @@ router.post("/dashboard", async (req, res) => {
   //use async await
   const hits = response.data.hits;
   const recipes = hits.map((hit) => {
+    const recipeUrl = hit.recipe.uri;
+    const recipeUrlLength = recipeUrl.length;
+    const recipeUrlIndex = recipeUrlLength - 51;
+    const recipeId = recipeUrl.slice(-recipeUrlIndex);
     const label = hit.recipe.label;
     const imageUrl = hit.recipe.image;
     const source = hit.recipe.source;
     const ingredients = hit.recipe.ingredientLines;
     const calories = hit.recipe.calories;
-    return { label, imageUrl, source, ingredients, calories };
+    return { recipeId, label, imageUrl, source, ingredients, calories };
   });
 
   const recentSearch = {
@@ -84,8 +88,16 @@ router.post("/dashboard", async (req, res) => {
 router.post("/save/recipe", async (req, res) => {
   try {
     console.log(req.body);
-    const { label, imageUrl, ingredients, source, calories } = req.body;
+    const {
+      recipeId,
+      label,
+      imageUrl,
+      ingredients,
+      source,
+      calories,
+    } = req.body;
     const payload = {
+      recipeId,
       label,
       imageUrl,
       source,
