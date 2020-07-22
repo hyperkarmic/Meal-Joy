@@ -187,4 +187,11 @@ router.post("/save/recipe", async (req, res) => {
   }
 });
 
+router.get("/my-recipes", async (req, res) => {
+  const recipes = await Recipe.findAll({
+    where: { userId: req.user.id },
+  });
+  res.json(recipes);
+});
+
 module.exports = router;
