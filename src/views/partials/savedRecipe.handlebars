@@ -1,0 +1,39 @@
+<form class="flex justify-center" action="/favorite/recipe" method="POST">
+    <div class="flex justify-between border w-4/5 md:w-auto lg:w-auto m-1 md:m-3 lg:m-4  p-3">
+        <div class="flex content-center flex-wrap bg-gray-200 h-48">
+            <div>
+                <img src={{imageUrl}}>
+            </div>
+        </div>
+        <div class="w-3/4 h-100% p-4 flex flex-col justify-between leading-normal">
+            <div>
+                <p class="text-xs text-gray-600 flex items-center">
+                    kcal: {{caloriesPerPerson}} serves: {{serves}}
+                </p>
+                <div class="text-gray-900 font-bold text-lg md:text-xl lg:text-xl mb-2">
+                    {{label}}
+                </div>
+            </div>
+            <div class="flex justify-between items-center mb-4">
+                <div class="text-xs">
+                    <p class="text-gray-900 leading-none">{{source}}</p>
+                </div>
+                <div class="save">
+                    <button type="submit"
+                        class="bg-green-300 hover:bg-green-300 text-white text-sm font-bold py-2 px-4 rounded-full">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="userId" name="userId" value={{userId}}>
+        <input type="hidden" id="recipeId" name="recipeId" value={{recipeId}}>
+        <input type="hidden" id="label" name="label" value={{label}}>
+        <input type="hidden" id="caloriesPerPerson" name="caloriesPerPerson" value={{caloriesPerPerson}}>
+        <input type="hidden" id="imageUrl" name="imageUrl" value={{imageUrl}}>
+        <input type="hidden" id="source" name="source" value={{source}}>
+        <input type="hidden" id="ingredients" name="ingredients" value="testing">
+        <input type="hidden" id="serves" name="serves" value={{serves}}>
+        <input type="hidden" id="favorite" name="favorite" value=true>
+    </div>
+</form>

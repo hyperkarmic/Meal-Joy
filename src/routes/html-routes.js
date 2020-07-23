@@ -4,6 +4,7 @@ const axios = require("axios");
 const Recipe = require("../models/recipe");
 const RecentSearchResult = require("../models/recentSearchResult");
 const isAuthenticated = require("../middleware/isAuthenticated");
+const e = require("express");
 
 const router = express.Router();
 
@@ -158,7 +159,6 @@ router.post("/dashboard", async (req, res) => {
 
 router.post("/save/recipe", async (req, res) => {
   try {
-    console.log(req.body);
     const {
       userId,
       recipeId,
@@ -181,6 +181,29 @@ router.post("/save/recipe", async (req, res) => {
     };
     await Recipe.create(payload);
     res.redirect("/dashboard");
+  } catch (err) {
+    console.log(err);
+    res.status(401).json(err);
+  }
+});
+
+router.get("/my-recipes", async (req, res) => {
+  const recipes = await Recipe.findAll({
+    where: { userId: req.user.id },
+    raw: true,
+  });
+  res.render("savedRecipes", { recipes });
+});
+
+router.post("/favorite/recipe", async (req, res) => {
+  try {
+    const { favorite, recipeId, label } = req.body;
+    if (favorite == false) {
+      await Recipe.update({ favorite }, { where: { recipeId } });
+    } else {
+      await Recipe.update({ favorite: false }, { where: { recipeId } });
+    }
+    res.redirect("/my-recipes");
   } catch (err) {
     console.log(err);
     res.status(401).json(err);
