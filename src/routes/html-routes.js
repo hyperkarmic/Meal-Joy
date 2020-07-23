@@ -4,6 +4,7 @@ const axios = require("axios");
 const Recipe = require("../models/recipe");
 const RecentSearchResult = require("../models/recentSearchResult");
 const isAuthenticated = require("../middleware/isAuthenticated");
+const e = require("express");
 
 const router = express.Router();
 
@@ -191,16 +192,22 @@ router.get("/my-recipes", async (req, res) => {
     where: { userId: req.user.id },
     raw: true,
   });
-  res.json(recipes);
+  res.render("savedRecipes", { recipes });
 });
 
-router.post("/my-recipes", async (req, res) => {
-  const { recipeId } = req.body;
-  const favoriteRecipes = await Recipe.update({
-    favorite: true,
-    where: { userId: req.user.id, recipeId },
-  });
-  res.json(favoriteRecipes);
+router.post("/favorite/recipe", async (req, res) => {
+  try {
+    const { favorite, recipeId, label } = req.body;
+    if (favorite == false) {
+      await Recipe.update({ favorite }, { where: { recipeId } });
+    } else {
+      await Recipe.update({ favorite: false }, { where: { recipeId } });
+    }
+    res.redirect("/my-recipes");
+  } catch (err) {
+    console.log(err);
+    res.status(401).json(err);
+  }
 });
 
 module.exports = router;

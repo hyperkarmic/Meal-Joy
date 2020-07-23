@@ -42,7 +42,7 @@ const schema = {
     allowNull: false,
   },
   favorite: {
-    type:sequelize.BOOLEAN,
+    type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: false,
   },

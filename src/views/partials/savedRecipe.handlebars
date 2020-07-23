@@ -1,4 +1,4 @@
-<form class="flex justify-center" action="/save/recipe" method="POST">
+<form class="flex justify-center" action="/favorite/recipe" method="POST">
     <div class="flex justify-between border w-4/5 md:w-auto lg:w-auto m-1 md:m-3 lg:m-4  p-3">
         <div class="flex content-center flex-wrap bg-gray-200 h-48">
             <div>
@@ -13,9 +13,6 @@
                 <div class="text-gray-900 font-bold text-lg md:text-xl lg:text-xl mb-2">
                     {{label}}
                 </div>
-                <div>
-                    {{ingredients}}
-                </div>
             </div>
             <div class="flex justify-between items-center mb-4">
                 <div class="text-xs">
@@ -29,5 +26,14 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="userId" name="userId" value={{userId}}>
+        <input type="hidden" id="recipeId" name="recipeId" value={{recipeId}}>
+        <input type="hidden" id="label" name="label" value={{label}}>
+        <input type="hidden" id="caloriesPerPerson" name="caloriesPerPerson" value={{caloriesPerPerson}}>
+        <input type="hidden" id="imageUrl" name="imageUrl" value={{imageUrl}}>
+        <input type="hidden" id="source" name="source" value={{source}}>
+        <input type="hidden" id="ingredients" name="ingredients" value="testing">
+        <input type="hidden" id="serves" name="serves" value={{serves}}>
+        <input type="hidden" id="favorite" name="favorite" value=true>
     </div>
 </form>
