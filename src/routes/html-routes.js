@@ -48,10 +48,14 @@ router.get("/dashboard", isAuthenticated, async (req, res) => {
       ? JSON.parse(recentSearches.searchResults)
       : undefined;
 
+  console.log("this is recipes data", recipes);
+
   const savedRecipes = await Recipe.findAll({
-    where: { userId: req.user.id },
+    where: { userId: req.user.id, favorite: false },
     raw: true,
   });
+
+  console.log("this is saved recipes data", savedRecipes);
 
   const savedData = savedRecipes.map((recipe) => {
     const userId = recipe !== null ? recipe.userId : undefined;
@@ -188,20 +192,69 @@ router.post("/save/recipe", async (req, res) => {
 });
 
 router.get("/my-recipes", async (req, res) => {
-  const recipes = await Recipe.findAll({
-    where: { userId: req.user.id },
+  const searchTerm = "chicken";
+  const savedRecipeData = await Recipe.findAll({
+    where: { userId: req.user.id, favorite: false },
+  });
+  const recipes = savedRecipeData.map((recipe) => {
+    const userId = recipe !== null ? recipe.userId : undefined;
+    const recipeId = recipe !== null ? recipe.recipeId : undefined;
+    const label = recipe !== null ? recipe.label : undefined;
+    const imageUrl = recipe !== null ? recipe.imageUrl : undefined;
+    const caloriesPerPerson =
+      recipe !== null ? recipe.caloriesPerPerson : undefined;
+    const serves = recipe !== null ? recipe.serves : undefined;
+    const source = recipe !== null ? recipe.source : undefined;
+    const ingredients = recipe !== null ? recipe.ingredients : undefined;
+    return {
+      userId,
+      recipeId,
+      label,
+      imageUrl,
+      caloriesPerPerson,
+      serves,
+      source,
+      ingredients,
+    };
+  });
+
+  const favoriteRecipes = await Recipe.findAll({
+    where: { userId: req.user.id, favorite: true },
     raw: true,
   });
-  res.render("savedRecipes", { recipes });
-});
 
-router.post("/favorite/recipe", async (req, res) => {
+  const savedRecipes = favoriteRecipes.map((recipe) => {
+    const userId = recipe !== null ? recipe.userId : undefined;
+    const recipeId = recipe !== null ? recipe.recipeId : undefined;
+    const label = recipe !== null ? recipe.label : undefined;
+    const imageUrl = recipe !== null ? recipe.imageUrl : undefined;
+    const caloriesPerPerson =
+      recipe !== null ? recipe.caloriesPerPerson : undefined;
+    const serves = recipe !== null ? recipe.serves : undefined;
+    const source = recipe !== null ? recipe.source : undefined;
+    const ingredients = recipe !== null ? recipe.ingredients : undefined;
+
+    return {
+      userId,
+      recipeId,
+      label,
+      imageUrl,
+      caloriesPerPerson,
+      serves,
+      source,
+      ingredients,
+    };
+  });
+
+  res.render("savedRecipes", { recipes, savedRecipes });
+});
+router.post("/my-recipes", async (req, res) => {
   try {
-    const { favorite, recipeId, label } = req.body;
-    if (favorite == false) {
-      await Recipe.update({ favorite }, { where: { recipeId } });
+    const { favorite, recipeId } = req.body;
+    if (favorite) {
+      await Recipe.update({ favorite: 1 }, { where: { recipeId } });
     } else {
-      await Recipe.update({ favorite: false }, { where: { recipeId } });
+      await Recipe.update({ favorite: 0 }, { where: { recipeId } });
     }
     res.redirect("/my-recipes");
   } catch (err) {
