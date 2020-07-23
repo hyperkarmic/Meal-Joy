@@ -158,7 +158,6 @@ router.post("/dashboard", async (req, res) => {
 
 router.post("/save/recipe", async (req, res) => {
   try {
-    console.log(req.body);
     const {
       userId,
       recipeId,
@@ -190,8 +189,18 @@ router.post("/save/recipe", async (req, res) => {
 router.get("/my-recipes", async (req, res) => {
   const recipes = await Recipe.findAll({
     where: { userId: req.user.id },
+    raw: true,
   });
   res.json(recipes);
+});
+
+router.post("/my-recipes", async (req, res) => {
+  const { recipeId } = req.body;
+  const favoriteRecipes = await Recipe.update({
+    favorite: true,
+    where: { userId: req.user.id, recipeId },
+  });
+  res.json(favoriteRecipes);
 });
 
 module.exports = router;

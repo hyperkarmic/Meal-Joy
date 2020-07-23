@@ -41,6 +41,11 @@ const schema = {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
+  favorite: {
+    type:sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
 };
 
 const Recipe = sequelize.define("recipe", schema);
