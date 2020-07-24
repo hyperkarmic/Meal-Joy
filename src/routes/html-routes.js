@@ -48,14 +48,10 @@ router.get("/dashboard", isAuthenticated, async (req, res) => {
       ? JSON.parse(recentSearches.searchResults)
       : undefined;
 
-  console.log("this is recipes data", recipes);
-
   const savedRecipes = await Recipe.findAll({
     where: { userId: req.user.id, favorite: false },
     raw: true,
   });
-
-  console.log("this is saved recipes data", savedRecipes);
 
   const savedData = savedRecipes.map((recipe) => {
     const userId = recipe !== null ? recipe.userId : undefined;
@@ -195,6 +191,7 @@ router.get("/my-recipes", async (req, res) => {
   const searchTerm = "chicken";
   const savedRecipeData = await Recipe.findAll({
     where: { userId: req.user.id, favorite: false },
+    raw: true,
   });
   const recipes = savedRecipeData.map((recipe) => {
     const userId = recipe !== null ? recipe.userId : undefined;
@@ -215,6 +212,7 @@ router.get("/my-recipes", async (req, res) => {
       serves,
       source,
       ingredients,
+      favorite: false,
     };
   });
 
@@ -243,6 +241,7 @@ router.get("/my-recipes", async (req, res) => {
       serves,
       source,
       ingredients,
+      favorite: true,
     };
   });
 
@@ -251,7 +250,7 @@ router.get("/my-recipes", async (req, res) => {
 router.post("/my-recipes", async (req, res) => {
   try {
     const { favorite, recipeId } = req.body;
-    if (favorite) {
+    if (favorite === "false") {
       await Recipe.update({ favorite: 1 }, { where: { recipeId } });
     } else {
       await Recipe.update({ favorite: 0 }, { where: { recipeId } });
