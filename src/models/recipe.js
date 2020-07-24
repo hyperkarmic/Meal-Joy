@@ -30,7 +30,7 @@ const schema = {
     },
   },
   ingredients: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false,
   },
   caloriesPerPerson: {

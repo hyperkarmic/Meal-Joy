@@ -4,7 +4,6 @@ const axios = require("axios");
 const Recipe = require("../models/recipe");
 const RecentSearchResult = require("../models/recentSearchResult");
 const isAuthenticated = require("../middleware/isAuthenticated");
-const e = require("express");
 
 const router = express.Router();
 
@@ -97,7 +96,8 @@ router.post("/dashboard", async (req, res) => {
     const label = hit.recipe.label;
     const imageUrl = hit.recipe.image;
     const source = hit.recipe.source;
-    const ingredients = hit.recipe.ingredientLines;
+    const ingredientLines = hit.recipe.ingredientLines;
+    const ingredients = ingredientLines.join(",");
     const serves = hit.recipe.yield;
     const calories = hit.recipe.calories;
     const caloriesPerPerson = Math.floor(calories / serves);
@@ -176,8 +176,8 @@ router.post("/save/recipe", async (req, res) => {
       imageUrl,
       caloriesPerPerson,
       serves,
-      source,
       ingredients,
+      source,
     };
     await Recipe.create(payload);
     res.redirect("/dashboard");
@@ -188,11 +188,11 @@ router.post("/save/recipe", async (req, res) => {
 });
 
 router.get("/my-recipes", async (req, res) => {
-  const searchTerm = "chicken";
   const savedRecipeData = await Recipe.findAll({
     where: { userId: req.user.id, favorite: false },
     raw: true,
   });
+
   const recipes = savedRecipeData.map((recipe) => {
     const userId = recipe !== null ? recipe.userId : undefined;
     const recipeId = recipe !== null ? recipe.recipeId : undefined;
@@ -203,6 +203,7 @@ router.get("/my-recipes", async (req, res) => {
     const serves = recipe !== null ? recipe.serves : undefined;
     const source = recipe !== null ? recipe.source : undefined;
     const ingredients = recipe !== null ? recipe.ingredients : undefined;
+
     return {
       userId,
       recipeId,
@@ -247,6 +248,7 @@ router.get("/my-recipes", async (req, res) => {
 
   res.render("savedRecipes", { recipes, savedRecipes });
 });
+
 router.post("/my-recipes", async (req, res) => {
   try {
     const { favorite, recipeId } = req.body;
