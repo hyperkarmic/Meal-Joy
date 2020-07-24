@@ -4,7 +4,6 @@ const axios = require("axios");
 const Recipe = require("../models/recipe");
 const RecentSearchResult = require("../models/recentSearchResult");
 const isAuthenticated = require("../middleware/isAuthenticated");
-const e = require("express");
 
 const router = express.Router();
 
@@ -48,14 +47,10 @@ router.get("/dashboard", isAuthenticated, async (req, res) => {
       ? JSON.parse(recentSearches.searchResults)
       : undefined;
 
-  console.log("this is recipes data", recipes);
-
   const savedRecipes = await Recipe.findAll({
     where: { userId: req.user.id, favorite: false },
     raw: true,
   });
-
-  console.log("this is saved recipes data", savedRecipes);
 
   const savedData = savedRecipes.map((recipe) => {
     const userId = recipe !== null ? recipe.userId : undefined;
@@ -101,7 +96,8 @@ router.post("/dashboard", async (req, res) => {
     const label = hit.recipe.label;
     const imageUrl = hit.recipe.image;
     const source = hit.recipe.source;
-    const ingredients = hit.recipe.ingredientLines;
+    const ingredientLines = hit.recipe.ingredientLines;
+    const ingredients = ingredientLines.join(",");
     const serves = hit.recipe.yield;
     const calories = hit.recipe.calories;
     const caloriesPerPerson = Math.floor(calories / serves);
@@ -180,8 +176,8 @@ router.post("/save/recipe", async (req, res) => {
       imageUrl,
       caloriesPerPerson,
       serves,
-      source,
       ingredients,
+      source,
     };
     await Recipe.create(payload);
     res.redirect("/dashboard");
@@ -192,10 +188,10 @@ router.post("/save/recipe", async (req, res) => {
 });
 
 router.get("/my-recipes", async (req, res) => {
-  const searchTerm = "chicken";
   const savedRecipeData = await Recipe.findAll({
     where: { userId: req.user.id, favorite: false },
   });
+
   const recipes = savedRecipeData.map((recipe) => {
     const userId = recipe !== null ? recipe.userId : undefined;
     const recipeId = recipe !== null ? recipe.recipeId : undefined;
@@ -206,6 +202,8 @@ router.get("/my-recipes", async (req, res) => {
     const serves = recipe !== null ? recipe.serves : undefined;
     const source = recipe !== null ? recipe.source : undefined;
     const ingredients = recipe !== null ? recipe.ingredients : undefined;
+    const favorite = recipe !== null ? recipe.favorite : undefined;
+
     return {
       userId,
       recipeId,
@@ -215,6 +213,7 @@ router.get("/my-recipes", async (req, res) => {
       serves,
       source,
       ingredients,
+      favorite,
     };
   });
 
@@ -233,6 +232,7 @@ router.get("/my-recipes", async (req, res) => {
     const serves = recipe !== null ? recipe.serves : undefined;
     const source = recipe !== null ? recipe.source : undefined;
     const ingredients = recipe !== null ? recipe.ingredients : undefined;
+    const favorite = recipe !== null ? recipe.favorite : undefined;
 
     return {
       userId,
@@ -243,15 +243,17 @@ router.get("/my-recipes", async (req, res) => {
       serves,
       source,
       ingredients,
+      favorite,
     };
   });
 
   res.render("savedRecipes", { recipes, savedRecipes });
 });
+
 router.post("/my-recipes", async (req, res) => {
   try {
     const { favorite, recipeId } = req.body;
-    if (favorite) {
+    if (favorite === "false") {
       await Recipe.update({ favorite: 1 }, { where: { recipeId } });
     } else {
       await Recipe.update({ favorite: 0 }, { where: { recipeId } });
