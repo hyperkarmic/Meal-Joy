@@ -190,6 +190,7 @@ router.post("/save/recipe", async (req, res) => {
 router.get("/my-recipes", async (req, res) => {
   const savedRecipeData = await Recipe.findAll({
     where: { userId: req.user.id, favorite: false },
+    raw: true,
   });
 
   const recipes = savedRecipeData.map((recipe) => {
@@ -202,7 +203,6 @@ router.get("/my-recipes", async (req, res) => {
     const serves = recipe !== null ? recipe.serves : undefined;
     const source = recipe !== null ? recipe.source : undefined;
     const ingredients = recipe !== null ? recipe.ingredients : undefined;
-    const favorite = recipe !== null ? recipe.favorite : undefined;
 
     return {
       userId,
@@ -213,7 +213,7 @@ router.get("/my-recipes", async (req, res) => {
       serves,
       source,
       ingredients,
-      favorite,
+      favorite: false,
     };
   });
 
@@ -232,7 +232,6 @@ router.get("/my-recipes", async (req, res) => {
     const serves = recipe !== null ? recipe.serves : undefined;
     const source = recipe !== null ? recipe.source : undefined;
     const ingredients = recipe !== null ? recipe.ingredients : undefined;
-    const favorite = recipe !== null ? recipe.favorite : undefined;
 
     return {
       userId,
@@ -243,7 +242,7 @@ router.get("/my-recipes", async (req, res) => {
       serves,
       source,
       ingredients,
-      favorite,
+      favorite: true,
     };
   });
 
