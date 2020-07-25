@@ -61,7 +61,8 @@ router.get("/dashboard", isAuthenticated, async (req, res) => {
       recipe !== null ? recipe.caloriesPerPerson : undefined;
     const serves = recipe !== null ? recipe.serves : undefined;
     const source = recipe !== null ? recipe.source : undefined;
-    const ingredients = recipe !== null ? recipe.ingredients : undefined;
+    const ingredients =
+      recipe !== null ? JSON.parse(recipe.ingredients) : undefined;
     return {
       userId,
       recipeId,
@@ -96,8 +97,7 @@ router.post("/dashboard", async (req, res) => {
     const label = hit.recipe.label;
     const imageUrl = hit.recipe.image;
     const source = hit.recipe.source;
-    const ingredientLines = hit.recipe.ingredientLines;
-    const ingredients = ingredientLines.join(",");
+    const ingredients = JSON.stringify(hit.recipe.ingredientLines);
     const serves = hit.recipe.yield;
     const calories = hit.recipe.calories;
     const caloriesPerPerson = Math.floor(calories / serves);
@@ -137,7 +137,8 @@ router.post("/dashboard", async (req, res) => {
       recipe !== null ? recipe.caloriesPerPerson : undefined;
     const serves = recipe !== null ? recipe.serves : undefined;
     const source = recipe !== null ? recipe.source : undefined;
-    const ingredients = recipe !== null ? recipe.ingredients : undefined;
+    const ingredients =
+      recipe !== null ? JSON.parse(recipe.ingredients) : undefined;
     return {
       userId,
       recipeId,
@@ -202,7 +203,8 @@ router.get("/my-recipes", async (req, res) => {
       recipe !== null ? recipe.caloriesPerPerson : undefined;
     const serves = recipe !== null ? recipe.serves : undefined;
     const source = recipe !== null ? recipe.source : undefined;
-    const ingredients = recipe !== null ? recipe.ingredients : undefined;
+    const ingredients =
+      recipe !== null ? JSON.parse(recipe.ingredients) : undefined;
 
     return {
       userId,
@@ -231,7 +233,8 @@ router.get("/my-recipes", async (req, res) => {
       recipe !== null ? recipe.caloriesPerPerson : undefined;
     const serves = recipe !== null ? recipe.serves : undefined;
     const source = recipe !== null ? recipe.source : undefined;
-    const ingredients = recipe !== null ? recipe.ingredients : undefined;
+    const ingredients =
+      recipe !== null ? JSON.parse(recipe.ingredients) : undefined;
 
     return {
       userId,
