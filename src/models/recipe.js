@@ -30,7 +30,7 @@ const schema = {
     },
   },
   ingredients: {
-    type: Sequelize.TEXT,
+    type: Sequelize.TEXT("long"),
     allowNull: false,
   },
   caloriesPerPerson: {
@@ -50,6 +50,6 @@ const schema = {
 
 const Recipe = sequelize.define("recipe", schema);
 
-Recipe.sync();
+Recipe.sync({ alter: true });
 
 module.exports = Recipe;

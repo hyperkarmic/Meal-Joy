@@ -26,6 +26,6 @@ const schema = {
 
 const RecentSearchResult = sequelize.define("recentSearchResult", schema);
 
-RecentSearchResult.sync();
+RecentSearchResult.sync({ alter: true });
 
 module.exports = RecentSearchResult;
