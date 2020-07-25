@@ -50,6 +50,6 @@ const schema = {
 
 const Recipe = sequelize.define("recipe", schema);
 
-Recipe.sync();
+Recipe.sync({ alter: true });
 
 module.exports = Recipe;

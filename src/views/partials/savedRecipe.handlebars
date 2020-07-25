@@ -1,10 +1,11 @@
 <form class="flex justify-center" action="/my-recipes" method="POST">
   <div class="flex justify-between border w-4/5 md:w-auto lg:w-auto m-1 md:m-3 lg:m-4  p-3">
-    <div class="flex content-center flex-wrap bg-gray-200 h-48">
-      <div>
-        <img src={{imageUrl}}>
-      </div>
+    <div class="flex content-center overflow-hidden flex-wrap bg-gray-200 h-48">
+
+      <img src={{imageUrl}} class="w-full object-cover">
+
     </div>
+
     <div class="w-3/4 h-100% p-4 flex flex-col justify-between leading-normal">
       <div>
         <p class="text-xs text-gray-600 flex items-center">
@@ -13,6 +14,11 @@
         <div class="text-gray-900 font-bold text-lg md:text-xl lg:text-xl mb-2">
           {{label}}
         </div>
+      </div>
+      <div class="text-sm text-gray-700 mb-4">
+        {{#each ingredients}}
+        <p>- {{this}}</p>
+        {{/each}}
       </div>
       <div class="flex justify-between items-center mb-4">
         <div class="text-xs">
@@ -26,9 +32,7 @@
         </div>
       </div>
     </div>
-    {{#each ingredients}}
-    <p>{{this}}</p>
-    {{/each}}
+
     <input type="hidden" id="userId" name="userId" value={{userId}}>
     <input type="hidden" id="recipeId" name="recipeId" value={{recipeId}}>
     <input type="hidden" id="label" name="label" value="{{label}}">
