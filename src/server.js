@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const expressHandlebars = require("express-handlebars");
 const path = require("path");
+const compression = require("compression");
 
 const passport = require("./config/passport");
 const apiRoutes = require("./routes/api-routes");
@@ -25,6 +26,7 @@ const hbOptions = {
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(compression());
 
 app.use(express.static(path.join(__dirname, "/public")));
 
