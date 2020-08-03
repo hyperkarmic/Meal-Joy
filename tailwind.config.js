@@ -1,7 +1,6 @@
 module.exports = {
   purge: {
-    mode: "all",
-    content: ["./src/views/*.handlebars"],
+    content: ["./src/**/*.handlebars"],
   },
   theme: {
     extend: {},
