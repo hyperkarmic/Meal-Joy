@@ -1,5 +1,5 @@
 {
-  "name": "user-management-system",
+  "name": "meal-joy",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,15 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/surajverma2587/user-management-system.git"
+    "url": "git+https://github.com/hyperkarmic/Meal-Joy"
   },
   "keywords": [],
-  "author": "",
+  "author": "Stephanie Morrissey, Simon Myers",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/surajverma2587/user-management-system/issues"
-  },
-  "homepage": "https://github.com/surajverma2587/user-management-system#readme",
+  "homepage": "",
   "dependencies": {
     "autoprefixer": "^9.8.5",
     "axios": "^0.19.2",

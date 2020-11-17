@@ -17,17 +17,15 @@ A recipe search application that allows authenticated users to search for, save 
 
 To install all relevant dependencies run:
 
-```npm install
-
-```
+    npm install
 
 ## Usage
 
-To use this application run:
+To use this application locally, first clone repository then run:
 
-```npm run start
+    npm run start
 
-```
+To view the deployed version of the application visit the following link:
 
 ## Screenshots & How to Use
 
@@ -68,4 +66,3 @@ When contributing to this repository, please first discuss the change you wish t
 Simon Myers - <https://github.com/hyperkarmic>
 
 Stephanie Morrissey - <https://github.com/steph-morrissey>
-
